@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+int hitung_kata(char teks[]) {
+    int jumlah_kata = 0;
+    int i;
+    int dalam_kata = 0;
+
+    for (i = 0; teks[i] != '\0'; i++) {
+        if (teks[i] == ' ' || teks[i] == ',' || teks[i] == '.' || teks[i] == ';' || teks[i] == '!' || teks[i] == '?') {
+            if (dalam_kata) {
+                jumlah_kata++;
+                dalam_kata = 0; 
+            }
+        } else {
+            dalam_kata = 1;
+        }
+    }
+
+    if (dalam_kata) {
+        jumlah_kata++;
+    }
+
+    return jumlah_kata;
+}
+
+int main() {
+    char teks[100];
+
+    while (1) {
+        printf("Masukkan teks (ketik 'exit' untuk keluar): ");
+        fgets(teks, sizeof(teks), stdin);
+
+        teks[strcspn(teks, "\n")] = '\0';
+
+        if (strcmp(teks, "exit") == 0) {
+            break;
+        }
+
+        // Menghitung jumlah kata
+        int jumlah = hitung_kata(teks);
+        printf("Jumlah kata: %d\n", jumlah);
+    }
+
+    printf("Program selesai.\n");
+    return 0;
+}
